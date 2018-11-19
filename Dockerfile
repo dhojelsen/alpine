@@ -9,15 +9,18 @@ LABEL name="Alpine base image" \
 
 RUN sed -i -e 's/v[[:digit:]]\.[[:digit:]]/edge/g' /etc/apk/repositories
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+
 RUN apk upgrade --update-cache --available && \
 	sync 
+
+RUN apk del syslinux
 
 RUN apk update && \
 	apk add \
 		bash \
         cloud-init \
-        efibootmgr \
-		grub-efi \
+        grub \
+		grub-bios \
         linux-firmware \
 		linux-vanilla
 
